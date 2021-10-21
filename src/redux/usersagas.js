@@ -1,7 +1,7 @@
-import { all, call, delay, fork, put, takeEvery } from "redux-saga/effects"
-import { loadUsersError, loadUsersSuccess } from "./actions"
+import { all, call, delay, fork, put, takeEvery, takeLatest } from "redux-saga/effects"
+import { addUserError, loadUsersError, loadUsersSuccess } from "./actions"
 import * as types from "./actionTypes"
-import { loadUsersApi } from "./api"
+import { addUserApi, loadUsersApi } from "./api"
 
 export function* onLoadUsersStartAsync () {
   try {
@@ -16,11 +16,28 @@ export function* onLoadUsersStartAsync () {
   }
 }
 
+export function* onAddUserStartAsync ({payload}) {
+  try {
+    const response = yield call(addUserApi, payload)
+    if(response.status === 200) {
+      yield put(addUserError(response.data))
+    }
+  } 
+  catch(error) {
+    yield put(addUserError(error.response.data))
+  }
+}
+
 export function* onLoadUsers () {
   yield takeEvery(types.LOAD_USERS_START,onLoadUsersStartAsync)
 }
 
-const userSagas = [fork(onLoadUsers)]
+export function* onAddUser () {
+  yield takeLatest(types.ADD_USER_START,
+  onAddUserStartAsync)
+}
+
+const userSagas = [fork(onLoadUsers), fork(onAddUser)]
 
 export default function* rootSaga() {
   yield all([...userSagas])

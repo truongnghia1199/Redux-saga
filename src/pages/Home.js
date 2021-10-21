@@ -2,6 +2,7 @@ import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBTooltip, MDBIcon } fro
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadUsersStart } from '../redux/actions'
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -46,7 +47,25 @@ const Home = () => {
                       size="lg"
                     />
                     </MDBTooltip>
-                  </MDBBtn>
+                  </MDBBtn>{" "}
+                  <Link to={`/editUser/${item.id}`}>
+                    <MDBTooltip title="Edit" tag="a">
+                      <MDBIcon 
+                      fas icon="pen" 
+                      size="lg"
+                      style={{ marginBottom: "10px" }}
+                    />
+                    </MDBTooltip>{" "}
+                  </Link>
+                  <Link to={`/userInfo/${item.id}`}>
+                    <MDBTooltip title="View" tag="a">
+                      <MDBIcon 
+                      fas icon="eye" 
+                      size="lg"
+                      style={{ marginBottom: "10px" }}
+                    />
+                    </MDBTooltip>{" "}
+                  </Link>
                 </td>
                 </tr>
             </MDBTableBody>
