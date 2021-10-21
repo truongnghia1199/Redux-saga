@@ -1,11 +1,10 @@
-import logo from './logo.svg';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import AddEditUser from './pages/AddEditUser';
-import UserInfo from './pages/UserInfo';
-import About from './pages/About';
 import Header from './components/Header';
+import About from './pages/About';
+import AddEditUser from './pages/AddEditUser';
+import Home from './pages/Home';
+import UserInfo from './pages/UserInfo';
 
 function App() {
   return (
