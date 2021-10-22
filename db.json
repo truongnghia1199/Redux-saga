@@ -1,83 +1,13 @@
 {
   "users": [
     {
-      "id": "1",
-      "firstName": "Vi Van",
-      "lastName": "Ninh",
-      "gender": "Male",
-      "email": "ninhvv@dogoo.vn",
-      "address": "Ha Noi",
-      "phone": "123456789",
-      "role": "dev"
-    },
-    {
-      "id": "2",
-      "firstName": "Pham Duc",
-      "lastName": "Dat",
-      "gender": "Male",
-      "email": "datpd@dogoo.vn",
-      "address": "Ha Noi",
-      "phone": "123456789",
-      "role": "dev"
-    },
-    {
-      "id": "3",
-      "firstName": "Nguyen Viet",
-      "lastName": "Long",
-      "gender": "Male",
-      "email": "longnv@dogoo.vn",
-      "address": "Ha Noi",
-      "phone": "123456789",
-      "role": "dev"
-    },
-    {
-      "id": "4",
-      "firstName": "Truong Xuan",
-      "lastName": "Nghia",
-      "gender": "Male",
-      "email": "nghiatt@dogoo.vn",
-      "address": "Ha Noi",
-      "phone": "123456789",
-      "role": "dev"
-    },
-    {
-      "id": "5",
-      "firstName": "Doan Xuan",
-      "lastName": "Phi",
-      "gender": "Male",
-      "email": "phidx@dogoo.com",
-      "address": "Ha Noi",
-      "phone": "123456789",
-      "role": "dev"
-    },
-    {
-      "id": "6",
-      "firstName": "Do",
-      "lastName": "Dat",
-      "gender": "Male",
-      "email": "dathymax@gmail.com",
-      "address": "Ha Noi",
-      "phone": "0984193954",
-      "role": "dev"
-    },
-    {
-      "id": "4ed8d8f0-ce35-45cc-9698-6c2a844b8213",
-      "firstName": "asdf",
-      "lastName": "zxcv",
-      "gender": "ádf",
-      "email": "truongnghia111999@gmail.com",
+      "id": "b50c464e-5833-4a47-9412-cb7b98a2fe92",
+      "firstName": "đạt",
+      "lastName": "mỏ",
+      "gender": "asdf",
+      "email": "askdfj",
       "address": "asdf",
       "phone": "asdf",
-      "role": "zxcvzxcvzxcv"
-    },
-    {
-      "id": "84cfd703-d93a-4744-a216-16fc7bbeba05",
-      "firstName": "sadf",
-      "lastName": "sadf",
-      "gender": "asdf",
-      "email": "truongnghia1199@gmail.com",
-      "address": "asdf",
-      "phone": "sadf",
       "role": "asdf"
     }
   ]

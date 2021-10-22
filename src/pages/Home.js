@@ -1,19 +1,33 @@
-import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBTooltip, MDBIcon } from 'mdb-react-ui-kit'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { loadUsersStart } from '../redux/actions'
+import { MDBBtn, MDBIcon, MDBSpinner, MDBTable, MDBTableBody, MDBTableHead, MDBTooltip } from 'mdb-react-ui-kit';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { deleteUserStart, loadUsersStart } from '../redux/actions';
 
 const Home = () => {
   const dispatch = useDispatch()
-  const { users } = useSelector(state => state.data)
+  const { users, loading, error } = useSelector(state => state.data)
 
   useEffect(() => {
     dispatch(loadUsersStart())
   }, [])
 
-  const handleDelete = (id) => {
+  useEffect(() => error && toast.error(error), [error])
 
+  if(loading) {
+    return (
+      <MDBSpinner style={{marginTop: '150px'}} role='status'>
+          <span className="visually-hidden">Loading...</span>
+      </MDBSpinner>
+    )
+  }
+
+  const handleDelete = (id) => {
+    if(window.confirm("Are you sure that you wanted to delete?")) {
+      dispatch(deleteUserStart(id))
+      toast.success("User Deleted Successfully")
+    }
   }
   return (
     <div className="container" style={{ marginTop: "150px" }}>
@@ -30,7 +44,7 @@ const Home = () => {
             <th scope="col">Action</th>
           </tr>
         </MDBTableHead>
-        {users && users.map((item) => (
+          {users && users.map((item) => (
             <MDBTableBody>
               <tr>
                 <td>{item.firstName}</td>
@@ -57,19 +71,10 @@ const Home = () => {
                     />
                     </MDBTooltip>{" "}
                   </Link>
-                  <Link to={`/userInfo/${item.id}`}>
-                    <MDBTooltip title="View" tag="a">
-                      <MDBIcon 
-                      fas icon="eye" 
-                      size="lg"
-                      style={{ marginBottom: "10px" }}
-                    />
-                    </MDBTooltip>{" "}
-                  </Link>
                 </td>
-                </tr>
+              </tr>
             </MDBTableBody>
-        ))}
+          ))}
       </MDBTable>
     </div>
   )

@@ -1,9 +1,10 @@
-import { MDBBtn, MDBInput, MDBValidation } from "mdb-react-ui-kit";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
-import { v4 as uuidv4 } from "uuid";
-import { addUserStart } from "../redux/actions";
+import { MDBBtn, MDBInput, MDBValidation } from "mdb-react-ui-kit"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useHistory, useParams } from "react-router"
+import { v4 as uuidv4 } from "uuid"
+import { addUserStart, updateUserStart } from "../redux/actions"
+import { toast } from 'react-toastify'
 
 const initialState = {
   id: uuidv4(),
@@ -14,26 +15,50 @@ const initialState = {
   address: "",
   phone: "",
   role: "",
-};
+}
 
 const AddEditUser = () => {
-  const [fromValue, setFromValue] = useState(initialState);
-  const { firstName, lastName, gender, email, address, phone, role } =
-    fromValue;
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const [fromValue, setFromValue] = useState(initialState)
+  const [editMode, setEditMode] = useState(false)
+  const {users} = useSelector(state => state.data)
+  const { firstName, lastName, gender, email, address, phone, role } = fromValue
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const {id} = useParams()
+
+  useEffect(() => {
+    if (id) {
+      setEditMode(true)
+      const singleUser = users.find(item => item.id === id)
+      setFromValue({...singleUser})
+    } else {
+      setEditMode(false)
+      setFromValue({...initialState})
+    }
+  }, [id])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (firstName && lastName && gender && email && address && phone && role) {
-      dispatch(addUserStart(fromValue));
-      setTimeout(() => history.push("/"), 500);
-      alert("Add thanh cong");
+      if (!editMode) {
+        dispatch(addUserStart(fromValue))
+        toast.success("Added Successfully")
+        setTimeout(() => history.push("/"), 200)
+      } else {
+        dispatch(updateUserStart({id, fromValue}))
+        setEditMode(false)
+        toast.success("Updated Successfully")
+        setTimeout(() => history.push("/"), 200)
+      }
     }
-  };
+  } 
+
   const onInputChange = (e) => {
     let { name, value } = e.target;
-    setFromValue({ ...fromValue, [name]: value });
-  };
+    setFromValue({ ...fromValue, [name]: value })
+  }
+
+
   return (
     <MDBValidation
       className="row g-3"
@@ -41,7 +66,7 @@ const AddEditUser = () => {
       noValidate
       onSubmit={handleSubmit}
     >
-      <p className="fs-2 fw-bold">Add User Detail</p>
+      <p className="fs-2 fw-bold">{!editMode ? "Add User" : "Edit User"}</p>
       <div
         style={{
           margin: "auto",
@@ -51,7 +76,7 @@ const AddEditUser = () => {
         }}
       >
         <MDBInput
-          value={firstName}
+          value={firstName || ""}
           name="firstName"
           type="text"
           onChange={onInputChange}
@@ -62,7 +87,7 @@ const AddEditUser = () => {
         />
         <br />
         <MDBInput
-          value={lastName}
+          value={lastName || ""}
           name="lastName"
           type="text"
           onChange={onInputChange}
@@ -73,7 +98,7 @@ const AddEditUser = () => {
         />
         <br />
         <MDBInput
-          value={gender}
+          value={gender || ""}
           name="gender"
           type="text"
           onChange={onInputChange}
@@ -84,7 +109,7 @@ const AddEditUser = () => {
         />
         <br />
         <MDBInput
-          value={email}
+          value={email || ""}
           name="email"
           type="email"
           onChange={onInputChange}
@@ -95,7 +120,7 @@ const AddEditUser = () => {
         />
         <br />
         <MDBInput
-          value={address}
+          value={address || ""}
           name="address"
           type="text"
           onChange={onInputChange}
@@ -106,7 +131,7 @@ const AddEditUser = () => {
         />
         <br />
         <MDBInput
-          value={phone}
+          value={phone || ""}
           name="phone"
           type="text"
           onChange={onInputChange}
@@ -117,7 +142,7 @@ const AddEditUser = () => {
         />
         <br />
         <MDBInput
-          value={role}
+          value={role || ""}
           name="role"
           type="text"
           onChange={onInputChange}
@@ -129,7 +154,7 @@ const AddEditUser = () => {
         <br />
         <div className="col-12">
           <MDBBtn style={{ marginRight: "10px" }} type="submit">
-            Add
+            {!editMode ? "Add" : "Uppdate"}
           </MDBBtn>
           <MDBBtn onClick={() => history.push("/")} color="danger">
             Go Back
